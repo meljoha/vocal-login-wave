@@ -1,26 +1,35 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import LoginPage from "@/components/LoginPage";
 
 export const Route = createFileRoute("/")({
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
-
 function Index() {
-  return <PlaceholderIndex />;
+  const [isPending, setIsPending] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  return (
+    <LoginPage
+      isPending={isPending}
+      errorMessage={errorMessage}
+      onSubmit={(username, password) => {
+        setErrorMessage(null);
+        setIsPending(true);
+        setTimeout(() => {
+          setIsPending(false);
+          if (!username || !password) {
+            setErrorMessage("Please enter both your username and password.");
+          } else {
+            setErrorMessage(null);
+            console.log("Login submitted", { username, password });
+          }
+        }, 900);
+      }}
+      onGoToRegister={() => {
+        console.log("Go to register");
+      }}
+    />
+  );
 }
