@@ -137,6 +137,7 @@ export default function PracticePage(props: PracticePageProps) {
     onBack,
     liveTrail,
     attemptCurve,
+    onToggleMic,
   } = props;
 
   const selected = exercises.find((e) => e.id === selectedExerciseId) ?? exercises[0];
